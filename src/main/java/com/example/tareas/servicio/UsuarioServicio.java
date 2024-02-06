@@ -1,4 +1,4 @@
-package com.example.tareas.Servicios;
+package com.example.tareas.servicio;
 
 import com.example.tareas.entidades.Usuario;
 import com.example.tareas.excepciones.MiException;

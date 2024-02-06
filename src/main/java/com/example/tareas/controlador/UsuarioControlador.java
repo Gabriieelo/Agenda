@@ -1,7 +1,7 @@
 package com.example.tareas.controlador;
 
-import com.example.tareas.Servicios.ImagenServicio;
-import com.example.tareas.Servicios.UsuarioServicio;
+import com.example.tareas.servicio.ImagenServicio;
+import com.example.tareas.servicio.UsuarioServicio;
 import com.example.tareas.entidades.Usuario;
 import com.example.tareas.excepciones.MiException;
 import java.util.Date;
@@ -24,17 +24,23 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 @RequestMapping("/usuario")
 public class UsuarioControlador {
-    
+
     @Autowired
     private UsuarioServicio us;
     @Autowired
-    private ImagenServicio is; 
-    
+    private ImagenServicio is;
+
+    @GetMapping("/index")
+    public String index() {
+        return "index.html";
+    }
+
     @GetMapping("/registrar")
     public String registroUsuario() {
-        return "register.html";
+        return "registro.html";
     }
-    @PostMapping("/registrar")
+
+    @PostMapping("/registro")
     public String registrarUsuario(@RequestParam String nombre, @RequestParam String apellido, @RequestParam String email,
             @RequestParam String password, @RequestParam String password2, @RequestParam Integer dni, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date fechaDeNacimiento,
             @RequestParam Integer telefono, ModelMap modelo, RedirectAttributes redirectAttributes) {
@@ -47,9 +53,10 @@ public class UsuarioControlador {
             redirectAttributes.addFlashAttribute("error", ex.getMessage());
             modelo.put("nombre", nombre);
             modelo.put("email", email);
-            return "redirect:/usuario/registrar";
+            return "panel.html";
         }
     }
+
     @GetMapping("/login")
     public String loginUsuario(@RequestParam(required = false) String error, HttpSession session, ModelMap modelo, RedirectAttributes redirectAttributes) {
         Usuario usuario = (Usuario) session.getAttribute("usuariosession");
@@ -61,6 +68,7 @@ public class UsuarioControlador {
         }
         return "login.html";
     }
+
     @GetMapping("/lista")
     @PreAuthorize("hasRole('ROLE_USER')")
     public String listarUsuarios(ModelMap modelo, HttpSession session) {
@@ -72,6 +80,7 @@ public class UsuarioControlador {
         modelo.addAttribute("listaUsuarios", listaUsuarios);
         return "listaUsuarios.html";
     }
+
     @GetMapping("/modificar/{id}")
     @PreAuthorize("hasRole('ROLE_USER')")
     public String modificarUsuarioVista(@PathVariable String id, ModelMap modelo) {
@@ -79,7 +88,8 @@ public class UsuarioControlador {
         modelo.put("usuario", us.getOne(id));
         return "modificarUsuario.html";
     }
-     @PostMapping("/modificar/{id}")
+
+    @PostMapping("/modificar/{id}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String modificarUsuario(@PathVariable String id, String nombre, String apellido, String email,
             @RequestParam String rol, Integer dni,
@@ -94,7 +104,8 @@ public class UsuarioControlador {
             return "modificarUsuario.html";
         }
     }
-     @PostMapping("/eliminar/{id}")
+
+    @PostMapping("/eliminar/{id}")
     public String eliminarUsuario(@PathVariable String id) {
         try {
             us.borrarUsuario(id);
@@ -105,6 +116,7 @@ public class UsuarioControlador {
             return "redirect: /usuario/lista";
         }
     }
+
     @GetMapping("/perfil/{id}")
     public String perfilUsuario(@PathVariable String id, HttpSession session, ModelMap modelo) {
         Usuario usuario = (Usuario) session.getAttribute("usuariosession");
@@ -113,13 +125,13 @@ public class UsuarioControlador {
         }
         return "perfilUsuario.html";
     }
-    
+
     @PostMapping("/foto/{id}")
     public String cargarFoto(@PathVariable String id, @RequestParam("imagen") MultipartFile archivo) {
         try {
             if (id != null && archivo != null && !archivo.isEmpty()) {
                 Usuario usuario = us.getOne(id);
-                usuario.setImagen(is.guardarImagen(archivo));
+//                usuario.setImagen(is.guardarImagen(archivo));
                 us.guardarUsuarioCompleto(usuario);
 
                 // Redirige a la página del perfil u otra página relevante
@@ -131,7 +143,8 @@ public class UsuarioControlador {
         }
         return "redirect:/";
     }
-      @GetMapping("/cambiarContrasenaForm")
+
+    @GetMapping("/cambiarContrasenaForm")
     public String mostrarFormularioCambioContrasena(HttpSession session, ModelMap modelo) {
         Usuario usuario = (Usuario) session.getAttribute("usuariosession");
         if (usuario != null) {
@@ -139,6 +152,7 @@ public class UsuarioControlador {
         }
         return "modificarContrasena.html"; // Nombre de la vista del formulario
     }
+
     @PostMapping("/cambiarContrasena/{id}")
     public String procesarCambioContrasena(@PathVariable String id,
             @RequestParam String contrasenaActual,
@@ -156,10 +170,12 @@ public class UsuarioControlador {
             return "error"; // Redirigir al formulario con un mensaje de error
         }
     }
+
     @GetMapping("/exito")
     public String mostrarExitoCambioContrasena() {
         return "exito";
     }
+
     @GetMapping("/editar/{id}")
     public String mostrarFormularioEdicion(@PathVariable String id, HttpSession session, ModelMap modelo) {
         Usuario usuario = (Usuario) session.getAttribute("usuariosession");
@@ -168,6 +184,7 @@ public class UsuarioControlador {
         }
         return "editarPerfil.html";
     }
+
     @PostMapping("/editar/{id}")
     public String actualizarPerfil(@PathVariable String id, @RequestParam String nombre, @RequestParam String apellido, @RequestParam String email, @RequestParam Integer dni,
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date fechaDeNacimiento, @RequestParam Integer telefono) {
