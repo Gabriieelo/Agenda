@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Modificación</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+        <link type="text/css" href="/css.css" rel="stylesheet">
+    </head>
+    <body>
+        <br>
+        <form class="form" th:action="@{/usuario/modificar}" method="POST" style="display: flex; flex-direction: column;" enctype="multipart/form-data">
+            <nav class="navbar">
+                <div class="container">
+                    <a href="#" class="brand">Mi agenda</a>
+                    <ul class="nav-links">
+                        <li><a href="/usuario/inicio">Inicio</a></li>
+                        <li><a href="/usuario/amigo">Registrar amigo</a></li>
+                        <li><a href="/usuario/servicios">Servicios</a></li>
+                        <li><a href="/usuario/nosotros">¿Quienes somos?</a></li>
+                        <li><a href="/usuario/perfil">Perfil</a></li>
+                        <li><a href="/">Cerrar Sesión</a></li>
+                    </ul>
+                </div>
+            </nav>
+
+            <!-- Agregamos el campo oculto para el ID -->
+            <input type="hidden" th:value="${id}" name="id">
+
+            <h2 class="texto">Ingresa los nuevos datos</h2>
+            <input type="text" name="nombre" placeholder="Nombre" class="input-field" autocomplete="off">
+            <input type="text" name="profesion" placeholder="Profesion" class="input-field" autocomplete="off">
+            <input type="text" name="nacionalidad" placeholder="Nacionalidad" class="input-field" autocomplete="off">
+            <input type="text" name="telefono" placeholder="Telefono" class="input-field" autocomplete="off">
+            <button type="submit" class="button1">Actualizar</button>
+            <br>
+        </form>
+    </body>
+</html>

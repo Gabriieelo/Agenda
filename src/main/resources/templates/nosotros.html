@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Nosotros</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+        <link type ="text/css"   href= "/css.css" rel="stylesheet">
+    </head>
+    <body>
+        <form class="form " th:action="@{/usuario/nosotros}" method="post" style="display: flex; flex-direction: column;"enctype="multipart/form-data">
+            <nav class="navbar">
+                <div class="container">
+                    <a href="" class="brand">Mi agenda</a>
+                    <ul class="nav-links">
+                        <li><a href="/usuario/inicio">Inicio</a></li>
+                        <li><a href="/usuario/amigo">Registrar amigo</a></li>
+                        <li><a href="/usuario/servicios">Servicios</a></li>
+                        <li><a href="/usuario/nosotros">¿Quienes somos?</a></li>
+                        <li><a href="/usuario/perfil">Perfil</a></li>
+                        <li><a href="/">Cerrar Sesión</a></li>
+                    </ul>
+                </div>
+            </nav>
+
+            <h1 class="texto">PROYECTO AGENDA</h1>
+            <br>
+            <h4 class="texto">¡Hola! Soy Gabriel, un apasionado programador. En esta página, quiero compartir contigo mi proyecto más reciente: una agenda para guardar contactos.
+
+                ¿Alguna vez has deseado tener un lugar seguro y organizado para almacenar los contactos importantes en tu vida? ¡Eso es exactamente lo que mi proyecto ofrece!
+
+                Con esta agenda, puedes guardar los nombres, números de teléfono, direcciones de correo electrónico y otra información relevante de tus contactos de manera fácil y rápida. Ya no tendrás que preocuparte por perder números importantes o olvidar detalles importantes de tus amigos, familiares o colegas.
+
+                Mi objetivo al desarrollar esta agenda fue crear una herramienta simple y eficiente que sea accesible para todos. Ya sea que necesites mantener tus contactos personales o administrar una lista de clientes, esta agenda es la solución perfecta.
+
+                Estoy emocionado de compartir mi trabajo contigo y espero que esta agenda sea útil para ti. ¡Gracias por visitar mi página!
+            </h4>
+            <section class="form">
+                <div class="row mt-3">
+                    <div class="divVolver">
+                        <a  
+                            <button th:href="@{/usuario/inicio}" class="btn btn-secondary my-2 botonVolver botones">Volver al inicio</button>
+                        </a>
+                    </div>
+                </div>
+            </section>
+    </body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Editar</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+        <link type ="text/css"   href= "/css.css" rel="stylesheet">
+    </head>
+    <body>
+        <br>
+        <form class="form " th:action="@{/usuario/editar}" method="POST" style="display: flex; flex-direction: column;"enctype="multipart/form-data">
+            <nav class="navbar">
+                <div class="container">
+                    <a href="#" class="brand">Mi agenda</a>
+                    <ul class="nav-links">
+                        <li><a href="/usuario/inicio">Inicio</a></li>
+                        <li><a href="/usuario/amigo">Registrar amigo</a></li>
+                        <li><a href="/usuario/servicios">Servicios</a></li>
+                        <li><a href="/usuario/nosotros">¿Quienes somos?</a></li>
+                        <li><a href="/usuario/perfil">Perfil</a></li>
+                        <li><a href="/">Cerrar Sesión</a></li>
+                    </ul>
+                </div>
+            </nav>
+            <br>
+            <table class="texto">
+                <thead>
+                    <tr>
+                        <th scope="col">Id del amigo</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Profesion</th>
+                        <th scope="col">Telefono</th>
+                        <th scope="col">Nacionalidad</th>
+                        <th scope="col">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody th:each="amigos : ${amigos}">
+                    <tr>
+                        <th scope="row" th:text="${amigos.id}"></th>
+                        <td th:text="${amigos.nombre}"></td>
+                        <td th:text="${amigos.profesion}"></td>
+                        <td th:text="${amigos.telefono}"></td>
+                        <td th:text="${amigos.nacionalidad}"></td>
+                        <td>
+                            <a th:href="@{/usuario/modificar/__${amigos.id}__}" >Modificar</a>
+                        </td>
+                    </tr>   
+                </tbody>
+            </table>
+            <section class="form">
+                <div class="row mt-3">
+                    <div class="divVolver">
+                        <a  
+                            <button th:href="@{/usuario/inicio}" class="btn btn-secondary my-2 botonVolver botones">Volver al inicio</button>
+                        </a>
+                    </div>
+                </div>
+            </section>
+    </body>
+</html>
